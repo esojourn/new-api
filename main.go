@@ -54,6 +54,9 @@ func main() {
 	}
 
 	defer func() {
+		// Stop monitor system
+		service.StopMonitorSystem()
+
 		err := model.CloseDB()
 		if err != nil {
 			common.FatalLog("failed to close database: " + err.Error())
@@ -101,6 +104,16 @@ func main() {
 	}
 
 	go controller.AutomaticallyTestChannels()
+
+	// Initialize monitor system
+	if common.IsMasterNode {
+		notificationService := service.NewNotificationService()
+		controller.InitMonitorController(notificationService)
+		err := service.InitMonitorSystem()
+		if err != nil {
+			common.SysLog("failed to initialize monitor system: " + err.Error())
+		}
+	}
 
 	if common.IsMasterNode && constant.UpdateTask {
 		gopool.Go(func() {

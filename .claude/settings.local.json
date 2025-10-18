@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__morphllm-fast-apply__edit_file"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
