@@ -254,6 +254,9 @@ func InitResources() error {
 
 	logger.SetupLogger()
 
+	// 初始化请求体日志（REQUEST_LOG_ENABLED=true 时启用）
+	middleware.InitRequestLogger(*common.LogDir)
+
 	// Initialize model settings
 	ratio_setting.InitRatioSettings()
 
